@@ -30,6 +30,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+local visual_group = vim.api.nvim_create_augroup("VisualModeHighlight", {})
+
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = visual_group,
+  pattern = "*:v",
+  callback = function()
+    vim.opt.cursorline = true
+  end,
+})
+
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = visual_group,
+  pattern = "v:*",
+  callback = function()
+    vim.opt.cursorline = false
+  end,
+})
+
 -- format on save using efm langserver and configured formatters
 local lsp_fmt_group = vim.api.nvim_create_augroup("FormatOnSaveGroup", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
